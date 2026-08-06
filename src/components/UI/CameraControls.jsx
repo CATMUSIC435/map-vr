@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useMap } from 'react-map-gl/mapbox';
-import { RotateCcw, RotateCw, ChevronUp, ChevronDown, Move } from 'lucide-react';
+import { RotateCcw, RotateCw, ChevronUp, ChevronDown, Move, Gamepad2, X } from 'lucide-react';
 import useMapStore from '../../store/useMapStore';
 
 export default function CameraControls() {
   const { 'main-map': mapRef } = useMap();
   const isAnimating = useMapStore(state => state.isAnimating);
   const isTouring = useMapStore(state => state.isTouring);
+  const [isCollapsed, setIsCollapsed] = useState(false);
 
   const rotate = (direction) => {
     const map = mapRef?.getMap();
@@ -35,8 +36,23 @@ export default function CameraControls() {
     });
   };
 
+  if (isCollapsed) {
+    return (
+      <button 
+        className="camera-controls-toggle-open" 
+        onClick={() => setIsCollapsed(false)}
+        title="Bảng điều khiển Camera"
+      >
+        <Gamepad2 size={24} color="#fff" />
+      </button>
+    );
+  }
+
   return (
     <div className="camera-dpad">
+      <button className="camera-controls-toggle-close" onClick={() => setIsCollapsed(true)} title="Thu gọn điều khiển">
+        <X size={16} color="#aaa" />
+      </button>
       <button className="camera-dpad-btn camera-dpad-up" onClick={() => tilt('up')} title="Ngẩng nhìn lên" disabled={isAnimating || isTouring}>
         <ChevronUp size={24} />
       </button>

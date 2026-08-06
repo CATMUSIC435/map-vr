@@ -807,7 +807,7 @@ body, html {
   line-height: 1.6;
 }
 
-/* Gamification Progress */
+/* Gamification Panel */
 .gamification-panel {
   position: absolute;
   top: 20px;
@@ -815,13 +815,56 @@ body, html {
   background: rgba(15, 15, 20, 0.85);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 12px 16px;
+  padding: 15px 20px;
   border-radius: 12px;
-  width: 200px;
+  min-width: 200px;
   z-index: 100;
   color: white;
+  border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+.gamification-toggle-open {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(15, 15, 20, 0.85);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 100;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  transition: all 0.3s ease;
+}
+
+.gamification-toggle-open:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.gamification-toggle-close {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.gamification-toggle-close:hover {
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .gamification-header {
@@ -930,6 +973,51 @@ body, html {
   z-index: 100;
 }
 
+.camera-controls-toggle-open {
+  position: absolute;
+  bottom: 160px;
+  right: 20px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(15, 15, 20, 0.85);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 100;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  transition: all 0.3s ease;
+}
+
+.camera-controls-toggle-open:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.camera-controls-toggle-close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  z-index: 110;
+}
+
+.camera-controls-toggle-close:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+
 .camera-dpad-btn {
   background: transparent;
   border: none;
@@ -984,7 +1072,7 @@ body, html {
 }
 
 /* Common toolbar button styles */
-.street-view-btn, .ar-trigger-btn, .tour-btn {
+.street-view-btn, .ar-trigger-btn, .tour-btn, .weather-btn, .measure-btn {
   width: 48px;
   height: 48px;
   border-radius: 50%;
@@ -996,15 +1084,20 @@ body, html {
   transition: all 0.3s ease;
 }
 
-.street-view-btn {
+.street-view-btn, .weather-btn, .measure-btn {
   background: transparent;
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
-.street-view-btn:hover {
+.street-view-btn:hover, .weather-btn:hover, .measure-btn:hover {
   background: rgba(255, 255, 255, 0.1);
   transform: scale(1.05);
 }
-.street-view-btn:disabled {
+.weather-btn.active, .measure-btn.active {
+  background: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 0 10px rgba(255,255,255,0.2);
+}
+.street-view-btn:disabled, .weather-btn:disabled, .measure-btn:disabled {
   opacity: 0.5;
   cursor: not-allowed;
   transform: none;
@@ -1018,6 +1111,100 @@ body, html {
 .ar-trigger-btn:hover {
   transform: scale(1.1);
   box-shadow: 0 6px 20px rgba(0,204,255,0.6);
+}
+
+/* Minimap */
+.minimap-wrapper {
+  position: absolute;
+  top: 130px;
+  left: 20px;
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+}
+
+.minimap-container {
+  position: relative;
+  width: 180px;
+  height: 180px;
+  border-radius: 16px;
+  border: 2px solid rgba(255,255,255,0.2);
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.minimap-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  background: rgba(15, 15, 20, 0.65);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.minimap-toggle:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.minimap-toggle.close {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 60;
+}
+
+.minimap-toggle.open {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+.minimap-crosshair {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 10px;
+  height: 10px;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+.minimap-crosshair::before, .minimap-crosshair::after {
+  content: '';
+  position: absolute;
+  background: #ff0055;
+}
+.minimap-crosshair::before { top: 0; bottom: 0; left: 4px; right: 4px; }
+.minimap-crosshair::after { left: 0; right: 0; top: 4px; bottom: 4px; }
+
+/* Measurement Tooltip */
+.measurement-tooltip {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(15, 15, 20, 0.85);
+  backdrop-filter: blur(12px);
+  padding: 10px 20px;
+  border-radius: 20px;
+  border: 1px solid rgba(255,255,255,0.2);
+  color: white;
+  font-size: 14px;
+  z-index: 150;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  pointer-events: none;
+}
+.measurement-tooltip strong {
+  color: #00ffcc;
+  font-size: 16px;
 }
 
 .ar-modal-overlay {
@@ -1176,4 +1363,79 @@ body, html {
   border-radius: 20px;
 }
 
+/* =========================================
+   RESPONSIVE DESIGN (MOBILE & TABLET)
+========================================= */
+@media (max-width: 768px) {
+  /* Hide minimap on mobile to save space */
+  .minimap-container {
+    display: none !important;
+  }
 
+  /* Scale down toolbars and panels */
+  .left-toolbar {
+    left: 10px;
+    bottom: 100px;
+    transform: scale(0.85);
+    transform-origin: bottom left;
+  }
+
+  .gamification-panel {
+    top: 10px;
+    right: 10px;
+    transform: scale(0.85);
+    transform-origin: top right;
+  }
+
+  .map-style-switcher {
+    top: 70px;
+    right: 10px;
+    transform: scale(0.85);
+    transform-origin: top right;
+  }
+
+  .ai-chatbot-container {
+    bottom: 60px;
+    right: 10px;
+    transform: scale(0.85);
+    transform-origin: bottom right;
+  }
+
+  .camera-controls {
+    bottom: 60px;
+    left: 50%;
+    transform: translateX(-50%) scale(0.85);
+    transform-origin: bottom center;
+  }
+
+  /* Adjust Bottom Carousel */
+  .bottom-carousel-container {
+    bottom: 10px;
+    padding: 0 10px;
+  }
+
+  .amenity-card {
+    height: 90px;
+    padding: 8px 12px;
+  }
+
+  .amenity-icon-large {
+    width: 32px;
+    height: 32px;
+    font-size: 16px;
+  }
+
+  .amenity-info h4 {
+    font-size: 13px;
+  }
+
+  .amenity-info p {
+    font-size: 11px;
+  }
+
+  .ar-modal-content {
+    width: 90vw !important;
+    max-width: 90vw !important;
+    height: 80vh !important;
+  }
+}

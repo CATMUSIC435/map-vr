@@ -28,6 +28,11 @@ const useMapStore = create((set) => ({
   modelTransY: -73,
   modelTransZ: 0,
   
+  // Advanced Features (Weather, Measurement)
+  weatherMode: 'none', // 'none', 'rain', 'snow'
+  isMeasuring: false,
+  measurementPoints: [],
+
   setActiveAmenity: (amenity) => set((state) => {
     // Gamification logic
     if (amenity && !state.visitedAmenities.includes(amenity.id)) {
@@ -39,6 +44,10 @@ const useMapStore = create((set) => ({
   setIsTouring: (touring) => set({ isTouring: touring }),
   setCurrentMapStyle: (styleUrl) => set({ currentMapStyle: styleUrl }),
   setTimeOfDay: (time) => set({ timeOfDay: time }),
+  
+  setWeatherMode: (mode) => set({ weatherMode: mode }),
+  setIsMeasuring: (measuring) => set({ isMeasuring: measuring }),
+  setMeasurementPoints: (points) => set({ measurementPoints: points }),
   
   setModelProps: (props) => set((state) => ({ ...state, ...props })),
 }));

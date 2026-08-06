@@ -13,21 +13,26 @@ import ARViewerModal from './components/UI/ARViewerModal';
 import GamificationProgress from './components/UI/GamificationProgress';
 import StreetViewButton from './components/UI/StreetViewButton';
 import CameraControls from './components/UI/CameraControls';
+import WeatherOverlay from './components/UI/WeatherOverlay';
+import WeatherButton from './components/UI/WeatherButton';
+import MiniMap from './components/UI/MiniMap';
+import MeasurementLayer from './components/Map/MeasurementLayer';
+import MeasurementButton from './components/UI/MeasurementButton';
 
 
 const MAPBOX_TOKEN = import.meta.env.VITE_MAPBOX_TOKEN;
 
 // Initial view state for uncontrolled map
 const INITIAL_VIEW_STATE = {
-  longitude: 106.7009,
-  latitude: 10.7769,
-  zoom: 12.5,
-  pitch: 45,
-  bearing: 0
+  longitude: 106.747650,
+  latitude: 10.946650,
+  zoom: 16,
+  pitch: 60,
+  bearing: -20
 };
 
 export default function App() {
-  const { currentMapStyle, isTouring, timeOfDay } = useMapStore();
+  const { currentMapStyle, isTouring, timeOfDay, isMeasuring, measurementPoints, setMeasurementPoints } = useMapStore();
   const mapRef = React.useRef(null);
 
   React.useEffect(() => {
@@ -47,9 +52,17 @@ export default function App() {
     return '#e0dfdf'; // Ban ngày
   };
 
+  const handleMapClick = (e) => {
+    if (isMeasuring) {
+      setMeasurementPoints([...measurementPoints, [e.lngLat.lng, e.lngLat.lat]]);
+    }
+  };
+
   return (
     <MapProvider>
       <div className="app-container">
+        <WeatherOverlay />
+        
         <Map
           ref={mapRef}
           id="main-map"
@@ -59,6 +72,8 @@ export default function App() {
           maxPitch={85}
           projection="mercator"
           interactive={!isTouring}
+          onClick={handleMapClick}
+          cursor={isMeasuring ? 'crosshair' : 'auto'}
           fog={{
             range: [0.8, 8],
             color: getFogColor(),
@@ -85,11 +100,16 @@ export default function App() {
           <RouteLayer />
           <MarkersLayer />
           <CustomModelLayer />
+          <MeasurementLayer />
           <NavigationControl position="top-left" />
         </Map>
 
+        <MiniMap />
+
         <div className="left-toolbar">
           <ARViewerModal />
+          <MeasurementButton />
+          <WeatherButton />
           <StreetViewButton />
           <TourButton />
         </div>
