@@ -79,6 +79,7 @@ export default function App() {
           interactive={!isTouring}
           onClick={handleMapClick}
           cursor={isMeasuring ? 'crosshair' : 'auto'}
+          antialias={true}
           fog={{
             range: [0.8, 8],
             color: getFogColor(),

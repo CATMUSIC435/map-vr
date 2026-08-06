@@ -66,7 +66,7 @@ export default function CustomModelLayer() {
               // Căn giữa mô hình
               gltf.scene.position.set(-center.x, -box.min.y, -center.z);
               
-              // Tối ưu vật liệu để giảm thiểu Z-fighting (chớp giật)
+              // Tối ưu vật liệu để giảm thiểu Z-fighting (chớp giật) và thêm khử răng cưa (Anisotropic Filtering)
               gltf.scene.traverse((child) => {
                 if (child.isMesh && child.material) {
                   // Ép chỉ render mặt trước để tránh xung đột mặt trước/mặt sau
@@ -75,6 +75,11 @@ export default function CustomModelLayer() {
                   // Thiết lập polygonOffset cho các vật liệu trong suốt nếu có
                   if (child.material.transparent) {
                     child.material.depthWrite = false;
+                  }
+
+                  // Tăng cường độ sắc nét cho texture (khử răng cưa cho góc nghiêng)
+                  if (child.material.map) {
+                    child.material.map.anisotropy = 16;
                   }
                 }
               });
@@ -97,6 +102,7 @@ export default function CustomModelLayer() {
             context: gl,
             antialias: true
           });
+          this.renderer.setPixelRatio(window.devicePixelRatio);
           this.renderer.autoClear = false;
         },
         onRemove: function (map, gl) {
