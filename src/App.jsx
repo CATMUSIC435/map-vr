@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import Map, { MapProvider, Layer, NavigationControl } from 'react-map-gl/mapbox';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import useMapStore from './store/useMapStore';
@@ -7,17 +7,22 @@ import MarkersLayer from './components/Map/MarkersLayer';
 import BottomCarousel from './components/UI/BottomCarousel';
 import TourButton from './components/UI/TourButton';
 import MapStyleSwitcher from './components/UI/MapStyleSwitcher';
-import AIChatbot from './components/UI/AIChatbot';
 import CustomModelLayer from './components/Map/CustomModelLayer';
-import ARViewerModal from './components/UI/ARViewerModal';
 import GamificationProgress from './components/UI/GamificationProgress';
 import StreetViewButton from './components/UI/StreetViewButton';
+
+const AIChatbot = React.lazy(() => import('./components/UI/AIChatbot'));
+const ARViewerModal = React.lazy(() => import('./components/UI/ARViewerModal'));
 import CameraControls from './components/UI/CameraControls';
 import WeatherOverlay from './components/UI/WeatherOverlay';
 import WeatherButton from './components/UI/WeatherButton';
 import MiniMap from './components/UI/MiniMap';
 import MeasurementLayer from './components/Map/MeasurementLayer';
 import MeasurementButton from './components/UI/MeasurementButton';
+import HeatmapLayer from './components/Map/HeatmapLayer';
+import TrafficLayer from './components/Map/TrafficLayer';
+import HeatmapButton from './components/UI/HeatmapButton';
+import TrafficButton from './components/UI/TrafficButton';
 
 
 const MAPBOX_TOKEN = import.meta.env.VITE_MAPBOX_TOKEN;
@@ -101,14 +106,20 @@ export default function App() {
           <MarkersLayer />
           <CustomModelLayer />
           <MeasurementLayer />
+          <HeatmapLayer />
+          <TrafficLayer />
           <NavigationControl position="top-left" />
         </Map>
 
         <MiniMap />
 
         <div className="left-toolbar">
-          <ARViewerModal />
+          <Suspense fallback={null}>
+            <ARViewerModal />
+          </Suspense>
           <MeasurementButton />
+          <HeatmapButton />
+          <TrafficButton />
           <WeatherButton />
           <StreetViewButton />
           <TourButton />
@@ -118,7 +129,9 @@ export default function App() {
         <GamificationProgress />
         <CameraControls />
 
-        <AIChatbot />
+        <Suspense fallback={null}>
+          <AIChatbot />
+        </Suspense>
         <BottomCarousel />
       </div>
     </MapProvider>

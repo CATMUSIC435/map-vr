@@ -32,6 +32,8 @@ const useMapStore = create((set) => ({
   weatherMode: 'none', // 'none', 'rain', 'snow'
   isMeasuring: false,
   measurementPoints: [],
+  isHeatmapActive: false,
+  isTrafficActive: false,
 
   setActiveAmenity: (amenity) => set((state) => {
     // Gamification logic
@@ -48,6 +50,8 @@ const useMapStore = create((set) => ({
   setWeatherMode: (mode) => set({ weatherMode: mode }),
   setIsMeasuring: (measuring) => set({ isMeasuring: measuring }),
   setMeasurementPoints: (points) => set({ measurementPoints: points }),
+  toggleHeatmap: () => set((state) => ({ isHeatmapActive: !state.isHeatmapActive })),
+  toggleTraffic: () => set((state) => ({ isTrafficActive: !state.isTrafficActive })),
   
   setModelProps: (props) => set((state) => ({ ...state, ...props })),
 }));

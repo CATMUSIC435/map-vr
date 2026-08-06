@@ -18,11 +18,13 @@ export default function AIChatbot() {
   const [isTyping, setIsTyping] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
   const [isListening, setIsListening] = useState(false);
+  const [position, setPosition] = useState({ x: 20, y: window.innerHeight - 500 });
+  
+  const activeAmenity = useMapStore(state => state.activeAmenity);
+  const setActiveAmenity = useMapStore(state => state.setActiveAmenity);
+
   const [voices, setVoices] = useState([]);
   const messagesEndRef = useRef(null);
-
-  const setActiveAmenity = useMapStore(state => state.setActiveAmenity);
-  const { 'main-map': mapRef } = useMapStore.getState ? { 'main-map': null } : {};
 
   // Smooth slide up animation for the chat window
   const windowSpring = useSpring({

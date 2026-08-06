@@ -133,7 +133,7 @@ body, html {
 .ai-chatbot-container {
   position: absolute;
   bottom: 80px;
-  right: 20px;
+  right: 14px; /* Adjusted to align center with 44px buttons at right: 20px */
   z-index: 50;
   display: flex;
   flex-direction: column;
@@ -479,13 +479,13 @@ body, html {
 .map-style-switcher {
   position: absolute;
   top: 100px; /* Moved up to replace time slider */
-  right: 20px;
+  right: 14px; /* Adjusted to align center with 44px buttons at right: 20px */
   display: flex;
   flex-direction: column;
   background: rgba(20, 20, 25, 0.65);
   backdrop-filter: blur(25px);
-  padding: 12px;
-  border-radius: 34px;
+  padding: 8px;
+  border-radius: 30px;
   border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
   z-index: 40;
@@ -506,11 +506,11 @@ body, html {
 }
 
 .map-style-switcher.expanded {
-  gap: 12px;
+  gap: 10px;
 }
 
 .map-style-switcher.expanded .style-btn:not(.active) {
-  height: 44px;
+  height: 38px;
   opacity: 1;
   border-width: 2px;
   pointer-events: auto;
@@ -519,8 +519,8 @@ body, html {
 }
 
 .style-btn {
-  width: 44px;
-  height: 44px;
+  width: 38px;
+  height: 38px;
   border-radius: 50%;
   border: 2px solid transparent;
   background: rgba(255, 255, 255, 0.05);
@@ -596,6 +596,9 @@ body, html {
   100% { box-shadow: 0 0 0 0 rgba(255, 0, 85, 0); }
 }
 /* Mapbox specific overrides for aesthetics */
+.mapboxgl-ctrl-top-left {
+  left: 17px !important; /* Centers the 29px mapbox buttons to the 42px left axis */
+}
 .mapboxgl-ctrl-bottom-right {
   bottom: 120px; /* offset for bottom carousel */
   right: 20px;
@@ -1057,7 +1060,7 @@ body, html {
 .left-toolbar {
   position: absolute;
   bottom: 160px;
-  left: 20px;
+  left: 8px; /* Adjusted to align center with minimap toggle at left: 20px */
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -1412,25 +1415,6 @@ body, html {
   .bottom-carousel-container {
     bottom: 10px;
     padding: 0 10px;
-  }
-
-  .amenity-card {
-    height: 90px;
-    padding: 8px 12px;
-  }
-
-  .amenity-icon-large {
-    width: 32px;
-    height: 32px;
-    font-size: 16px;
-  }
-
-  .amenity-info h4 {
-    font-size: 13px;
-  }
-
-  .amenity-info p {
-    font-size: 11px;
   }
 
   .ar-modal-content {

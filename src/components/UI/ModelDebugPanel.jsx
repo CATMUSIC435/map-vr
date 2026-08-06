@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import useMapStore from '../../store/useMapStore';
-import { Leva, useControls, button, folder } from 'leva';
+import { useControls, button, folder } from 'leva';
 
 export default function ModelDebugPanel() {
   const modelLng = useMapStore(state => state.modelLng);
