@@ -23,7 +23,7 @@ import HeatmapLayer from './components/Map/HeatmapLayer';
 import TrafficLayer from './components/Map/TrafficLayer';
 import HeatmapButton from './components/UI/HeatmapButton';
 import TrafficButton from './components/UI/TrafficButton';
-
+import SearchBar from './components/UI/SearchBar';
 
 const MAPBOX_TOKEN = import.meta.env.VITE_MAPBOX_TOKEN;
 
@@ -67,6 +67,7 @@ export default function App() {
     <MapProvider>
       <div className="app-container">
         <WeatherOverlay />
+        <SearchBar />
         
         <Map
           ref={mapRef}

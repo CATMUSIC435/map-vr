@@ -11,6 +11,7 @@ const useMapStore = create((set) => ({
   activeAmenity: null,
   isAnimating: false,
   isTouring: false,
+  showMarkers: true,
   currentMapStyle: MAP_STYLES[0].url,
   
   // Gamification & Features
@@ -44,6 +45,7 @@ const useMapStore = create((set) => ({
   }),
   setIsAnimating: (animating) => set({ isAnimating: animating }),
   setIsTouring: (touring) => set({ isTouring: touring }),
+  toggleMarkers: () => set((state) => ({ showMarkers: !state.showMarkers })),
   setCurrentMapStyle: (styleUrl) => set({ currentMapStyle: styleUrl }),
   setTimeOfDay: (time) => set({ timeOfDay: time }),
   

@@ -20,7 +20,10 @@ export default function MarkersLayer() {
   const activeAmenity = useMapStore(state => state.activeAmenity);
   const setActiveAmenity = useMapStore(state => state.setActiveAmenity);
   const isAnimating = useMapStore(state => state.isAnimating);
+  const showMarkers = useMapStore(state => state.showMarkers);
   const flyAndDrawRoute = useRouteAnimation();
+
+  if (!showMarkers) return null;
 
   return (
     <>
@@ -64,6 +67,32 @@ export default function MarkersLayer() {
           </Marker>
         );
       })}
+
+      {activeAmenity && activeAmenity.type === 'Searched' && (
+        <Marker key={activeAmenity.id} longitude={activeAmenity.lng} latitude={activeAmenity.lat} anchor="bottom">
+          <div 
+            className="marker-3d active"
+            style={{ 
+              '--marker-color': activeAmenity.color,
+              opacity: isAnimating ? 0.5 : 1,
+              pointerEvents: isAnimating ? 'none' : 'auto'
+            }}
+            onClick={(e) => {
+              e.stopPropagation();
+              playPing();
+              setActiveAmenity(activeAmenity);
+              flyAndDrawRoute(activeAmenity);
+            }}
+          >
+            <div className="marker-pulse"></div>
+            <div className="marker-pin">
+              <Icons.MapPin size={12} color="#fff" strokeWidth={2.5} />
+            </div>
+          </div>
+          
+          <InfoPopup amenity={activeAmenity} />
+        </Marker>
+      )}
     </>
   );
 }

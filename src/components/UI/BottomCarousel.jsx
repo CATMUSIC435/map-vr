@@ -9,9 +9,12 @@ export default function BottomCarousel() {
   const [emblaRef, emblaApi] = useEmblaCarousel({ dragFree: true });
   const activeAmenity = useMapStore(state => state.activeAmenity);
   const isAnimating = useMapStore(state => state.isAnimating);
+  const showMarkers = useMapStore(state => state.showMarkers);
+  const toggleMarkers = useMapStore(state => state.toggleMarkers);
   const flyAndDrawRoute = useRouteAnimation();
   
   const [activeCategory, setActiveCategory] = useState('Tất cả');
+  const [isExpanded, setIsExpanded] = useState(true);
 
   // Extract unique categories
   const categories = ['Tất cả', ...new Set(mockLocations.map(loc => loc.type))];
@@ -37,20 +40,42 @@ export default function BottomCarousel() {
 
   return (
     <div className="bottom-carousel-container">
-      {/* Category Tabs */}
-      <div className="carousel-categories">
-        {categories.map(cat => (
+      <div className="carousel-header" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <div className="carousel-categories" style={{ flex: 1, overflowX: 'auto', display: 'flex', paddingRight: '10px' }}>
+          {categories.map(cat => (
+            <button 
+              key={cat}
+              className={`category-btn ${activeCategory === cat ? 'active' : ''}`}
+              onClick={() => {
+                setActiveCategory(cat);
+                if (!isExpanded) setIsExpanded(true);
+              }}
+            >
+              {cat}
+            </button>
+          ))}
+        </div>
+        <div className="carousel-actions" style={{ display: 'flex', gap: '8px', paddingRight: '10px' }}>
           <button 
-            key={cat}
-            className={`category-btn ${activeCategory === cat ? 'active' : ''}`}
-            onClick={() => setActiveCategory(cat)}
+            className="category-btn" 
+            onClick={toggleMarkers} 
+            title={showMarkers ? 'Ẩn Markers' : 'Hiện Markers'}
+            style={{ padding: '8px', display: 'flex', alignItems: 'center' }}
           >
-            {cat}
+            {showMarkers ? <Icons.Eye size={18} /> : <Icons.EyeOff size={18} />}
           </button>
-        ))}
+          <button 
+            className="category-btn" 
+            onClick={() => setIsExpanded(!isExpanded)} 
+            title={isExpanded ? 'Thu gọn' : 'Mở rộng'}
+            style={{ padding: '8px', display: 'flex', alignItems: 'center' }}
+          >
+            {isExpanded ? <Icons.ChevronDown size={18} /> : <Icons.ChevronUp size={18} />}
+          </button>
+        </div>
       </div>
 
-      <div className="embla" ref={emblaRef}>
+      <div className={`embla ${!isExpanded ? 'hidden' : ''}`} ref={emblaRef} style={{ display: isExpanded ? 'block' : 'none' }}>
         <div className="embla__container">
           {filteredLocations.map(amenity => {
             const IconComponent = Icons[amenity.icon] || Icons.MapPin;
